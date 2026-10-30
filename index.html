@@ -1,1 +1,148 @@
-привет
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index of /archive</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --accent-color: #0d6efd;
+            --accent-hover: #0b5ed7;
+            --box-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Кнопка-папка */
+        .folder-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .folder-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .folder-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Контейнер файла (скрыт по умолчанию) */
+        .file-container {
+            display: none;
+            margin-top: 1.5rem;
+            background: var(--box-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Магия CSS: показываем файл, если его id совпадает с хешем в URL */
+        .file-container:target {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-header svg {
+            width: 18px;
+            height: 18px;
+            fill: #6c757d;
+        }
+
+        .close-btn {
+            float: right;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .close-btn:hover {
+            color: #343a40;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Текст Index of -->
+    <h1>Index of /my-project/archive</h1>
+
+    <!-- Кнопка Папка (ссылается на хеш #document-v1) -->
+    <a href="#document-v1" class="folder-btn">
+        <!-- SVG Иконка папки -->
+        <svg viewBox="0 0 24 24">
+            <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+        </svg>
+        Открыть документ проекта
+    </a>
+
+    <!-- Контейнер файла (активируется по хешу #document-v1) -->
+    <div id="document-v1" class="file-container">
+        <div class="file-header">
+            <!-- SVG Иконка файла -->
+            <svg viewBox="0 0 24 24">
+                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            </svg>
+            <span>readme_v1.txt</span>
+            <a href="#" class="close-btn">✖ Закрыть</a>
+        </div>
+        <div class="file-content">
+            <p>Привет! Это содержимое файла, которое стало видимым благодаря CSS-селектору <code>:target</code>.</p>
+            <p>Вы можете скопировать ссылку в адресной строке (включая #document-v1), отправить её кому-то, и файл откроется сразу при переходе.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
