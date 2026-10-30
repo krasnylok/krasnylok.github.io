@@ -1,0 +1,1 @@
+# krasnylok.github.io
