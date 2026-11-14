@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>капча</title>
+</head>
+<body>
+  <p>токен появится на хосте: <strong id="ip">загрузка...</strong></p>
+
+  <script>
+    const ipEl = document.getElementById('ip');
+
+    // Функция запроса с жестким таймаутом (2 секунды)
+    async function fetchWithTimeout(url, options = {}, timeout = 2000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(id);
+        return response;
+      } catch (e) {
+        clearTimeout(id);
+        throw e;
+      }
+    }
+
+    async function getIP() {
+      // Список быстрых API с поддержкой CORS
+      const sources = [
+        async () => {
+          const res = await fetchWithTimeout('https://db-ip.com');
+          const data = await res.json();
+          return data.ipAddress;
+        },
+        async () => {
+          const res = await fetchWithTimeout('https://ipwho.is');
+          const data = await res.json();
+          return data.ip;
+        },
+        async () => {
+          const res = await fetchWithTimeout('https://my-ip.io');
+          const data = await res.json();
+          return data.ip;
+        }
+      ];
+
+      for (const getFromSource of sources) {
+        try {
+          const ip = await getFromSource();
+          if (ip) {
+            ipEl.textContent = ip;
+            return;
+          }
+        } catch (err) {
+          // Игнорируем ошибку и сразу пробуем следующий сервис
+        }
+      }
+
+      ipEl.textContent = 'не удалось создать токен, попробуйте еще раз позже';
+    }
+
+    getIP();
+  </script>
+</body>
+</html>
